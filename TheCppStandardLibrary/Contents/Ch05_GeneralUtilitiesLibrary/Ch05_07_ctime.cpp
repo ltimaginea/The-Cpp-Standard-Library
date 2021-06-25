@@ -3,9 +3,9 @@
 
 #include <time.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 #pragma warning(disable:4996)
-#endif
+#endif // _WIN32
 
 // 打印本地时间，含换行符
 void PrintlnLocalTime()
