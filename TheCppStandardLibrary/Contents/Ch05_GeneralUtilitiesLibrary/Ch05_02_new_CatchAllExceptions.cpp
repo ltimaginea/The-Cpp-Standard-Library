@@ -27,11 +27,11 @@ int main()
 	{
 		Foo();
 	}
-	catch (std::bad_alloc& err)
+	catch (const std::bad_alloc& err)
 	{
 		std::cout << err.what() << std::endl;
 	}
-	catch (std::exception& err)
+	catch (const std::exception& err)
 	{
 		std::cout << err.what() << std::endl;
 	}
