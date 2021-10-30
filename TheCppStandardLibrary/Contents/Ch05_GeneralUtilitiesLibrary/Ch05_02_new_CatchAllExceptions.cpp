@@ -1,75 +1,44 @@
 ﻿#include <iostream>
 #include <new>
-#include <string>
 
-class Widget { double d[1024 * 1024 * 1024]; /* ... */ };
-
-
+class Widget { double d[1024]; /* ... */ };
 
 void Foo()
 {
-	Widget* ptr1 = new Widget;
+	Widget* ptr = new Widget;
 
 	try
 	{
-		//...			// perform some operations
+		// perform some operations...(may throw exceptions)
+		std::string().at(1);	// this generates an std::out_of_range
 	}
-	catch (/*...*/)		// for any exception
+	catch (...)			// for any exception
 	{
-		delete ptr1;	// clean up
+		delete ptr;		// clean up
 		throw;			// rethrow the exception
 	}
 
-	delete ptr1;		// clean up on normal end
+	delete ptr;			// clean up on normal end
 }
-
-
 
 int main()
 {
 	try
 	{
-		// 如果分配失败，new抛出std::bad_alloc
-		Widget* ptr1 = new Widget;
-		
-		try
-		{
-			//...			// perform some operations
-		}
-		catch (/* ... */)	// for any exception
-		{
-			delete ptr1;	// clean up
-			throw;			// rethrow the exception
-		}
-		
-		delete ptr1;		// clean up on normal end
+		Foo();
 	}
-	catch (const std::bad_alloc& err)
+	catch (std::bad_alloc& err)
 	{
 		std::cout << err.what() << std::endl;
 	}
-
-
-
-
-	return 0;
-
-
-
-
-	// 如果分配失败，new返回一个空指针
-	Widget* ptr2 = new (std::nothrow) Widget;
-	// 这个if...else...的判断可能有效
-	if (ptr2 == nullptr)
+	catch (std::exception& err)
 	{
-		std::cout << "new false" << std::endl;
+		std::cout << err.what() << std::endl;
 	}
-	else
+	catch (...)
 	{
-		// ...
+		std::cout << "unknown exceptions" << std::endl;
 	}
-	delete ptr2;
-
 
 	return 0;
 }
