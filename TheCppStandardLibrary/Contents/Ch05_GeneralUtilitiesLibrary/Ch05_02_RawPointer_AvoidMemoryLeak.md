@@ -9,7 +9,7 @@ void Foo()
 
 	// ... perform some operations(may throw exceptions)
 
-	delete ptr;				// clean up(destroy the object explicitly)
+	delete ptr;			// clean up(destroy the object explicitly)
 }
 ```
 
